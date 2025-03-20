@@ -30,6 +30,7 @@ public class ArticuloServicio {
         Fabrica fabrica = fabricaRepositorio.findById(idFabrica).get();
         validar(nombreArticulo, descripcionArticulo, idFabrica);
         Articulo articulo = new Articulo();
+        articulo.setNroArticulo(Articulo.getAndIncrement());
         articulo.setNombreArticulo(nombreArticulo);
         articulo.setDescripcionArticulo(descripcionArticulo);
         articulo.setFabrica(fabrica);
@@ -68,4 +69,5 @@ public class ArticuloServicio {
             throw new MiExcepcion("La fábrica no puede ser nula");
         }
     }
+
 }

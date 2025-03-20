@@ -1,13 +1,17 @@
 package com.lucim.casa_electricidad.servicios;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.lucim.casa_electricidad.entidades.Fabrica;
 import com.lucim.casa_electricidad.excepciones.MiExcepcion;
 import com.lucim.casa_electricidad.repositorios.FabricaRepositorio;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class FabricaServicio {
@@ -21,6 +25,24 @@ public class FabricaServicio {
         Fabrica fabrica = new Fabrica();
         fabrica.setNombreFabrica(nombre);
         fabricaRepositorio.save(fabrica);
+    }
+
+    @Transactional
+    public void modificarFabrica(String nombre) throws MiExcepcion {
+        Optional<Fabrica> respFabrica = fabricaRepositorio.findById(null);
+        if(respFabrica.isPresent()){
+            validar(nombre);
+            Fabrica fabrica = respFabrica.get();
+            fabrica.setNombreFabrica(nombre);
+            fabricaRepositorio.save(fabrica);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Fabrica> listarFabricas() throws MiExcepcion{
+        List<Fabrica> fabricas = new ArrayList<>();
+        fabricas = fabricaRepositorio.findAll();
+        return fabricas;
     }
 
     public void validar(String nombre) throws MiExcepcion {

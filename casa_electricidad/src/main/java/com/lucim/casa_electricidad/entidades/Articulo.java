@@ -9,14 +9,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 @Setter
 @Getter
-@NoArgsConstructor
 @Entity
 public class Articulo {
 
@@ -26,7 +25,7 @@ public class Articulo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(name = "num_articulo")
+    @Column(unique = true, name = "num_articulo")
     private Integer nroArticulo;
 
     @Column(nullable = false, name = "nombre_articulo")
@@ -38,8 +37,8 @@ public class Articulo {
     @ManyToOne
     private Fabrica fabrica;
 
-    @PrePersist
-    private void asignarNroArticulo() {
-        this.nroArticulo = atomicInteger.getAndIncrement();
+    public static int getAndIncrement() {
+       return atomicInteger.getAndIncrement();
     }
 }
+

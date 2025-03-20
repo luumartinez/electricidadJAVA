@@ -52,9 +52,34 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setPassword(new BCryptPasswordEncoder().encode(password));
             usuario.setRol(Rol.USER);
             usuarioRepositorio.save(usuario);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (MiExcepcion ex) {
+            throw new MiExcepcion(ex.getMessage());
         }
+    }
+
+    @Transactional
+    public void modificarUsuario(String email, String nombre, String apellido) throws MiExcepcion {
+        try {
+            Optional<Usuario> respUsuario = usuarioRepositorio.buscarPorEmail(email);
+            if(respUsuario.isPresent()) {
+                validar(email, nombre, apellido);
+                Usuario usuario = respUsuario.get();
+                usuario.setEmail(email);
+                usuario.setNombre(nombre);
+                usuario.setApellido(apellido);
+                usuarioRepositorio.save(usuario);
+            }
+
+        } catch (MiExcepcion ex) {
+            throw new MiExcepcion("No se pudo modificar el usuario" + ex.getMessage());
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Usuario> listarUsuarios() {
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios = usuarioRepositorio.findAll();
+        return usuarios;
     }
 
     @Override
@@ -99,6 +124,24 @@ public class UsuarioServicio implements UserDetailsService {
 
         if (!password.equals(password2)) {
             throw new MiExcepcion("Las contraseñas no coinciden");
+        }
+    }
+
+    public void validar(String email, String nombre, String apellido)
+            throws MiExcepcion {
+        if (email.isEmpty() || email == null) {
+            throw new MiExcepcion("El campo email no puede estar vacío");
+        }
+
+        if (usuarioRepositorio.buscarPorEmail(email).isPresent()) {
+            throw new MiExcepcion("El email ya se encuentra registrado");
+        }
+
+        if (nombre.isEmpty() || nombre == null || nombre.length() <= 2) {
+            throw new MiExcepcion("El campo nombre no puede estar vacío y debe contener al menos dos caracteres");
+        }
+        if (apellido.isEmpty() || apellido == null || apellido.length() <= 2) {
+            throw new MiExcepcion("El campo apellido no puede estar vacío y debe contener al menos dos caracteres");
         }
     }
 }

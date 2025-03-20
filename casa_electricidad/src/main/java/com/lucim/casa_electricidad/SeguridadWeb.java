@@ -18,27 +18,27 @@ public class SeguridadWeb {
         return new BCryptPasswordEncoder();
     }
 
-   /*  @Bean
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         // .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/registrar", "/registro", "/error")
-                        .requestMatchers("/", "/css/**", "/js/**", "/img/**", "/**")
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/**")
                         .permitAll())
                         // .requestMatchers("/admin/**").hasRole("ADMIN")
                         // .anyRequest().authenticated())
-                // .formLogin((form) -> form
-                //         .loginPage("/login")
-                //         .loginProcessingUrl("/logincheck")
-                //         .usernameParameter("email")
-                //         .passwordParameter("password")
-                //         .defaultSuccessUrl("/inicio", true)
-                //         .permitAll())
-                // .logout((logout) -> logout
-                //         .logoutUrl("/logout")
-                //         .logoutSuccessUrl("/login")
-                //         .permitAll())
+                .formLogin((form) -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/logincheck")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/inicio", true)
+                        .permitAll())
+                .logout((logout) -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .permitAll())
                 .csrf(csrf -> csrf.disable());
         return http.build();
-    } */
+    }
 }
