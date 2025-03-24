@@ -36,12 +36,14 @@ public class CasaElectricidadApplication {
 	// }
 	// };
 	// }
-/* 	@Bean
+	/* @Bean
 	CommandLineRunner init(ApplicationContext context) {
 		return args -> {
 			ArticuloServicio articuloServicio = context.getBean(ArticuloServicio.class);
 			try {
 				articuloServicio.crearArticulo("Cable", "TPU",
+				UUID.fromString("3eef0d36-85d5-4d2f-812c-0bcad90990fd"));
+				articuloServicio.crearArticulo("Plafon", "Aluminio",
 				UUID.fromString("3eef0d36-85d5-4d2f-812c-0bcad90990fd"));
 				// articuloServicio.modificarArticulo(UUID.fromString("bc8c8171-cbd0-44d5-9d66-b840fab70717"),
 				// "Reflector", "Solar",

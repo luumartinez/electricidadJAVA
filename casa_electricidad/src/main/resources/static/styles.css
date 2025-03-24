@@ -128,7 +128,7 @@ main {
 
 .lista-articulos-table th, .lista-articulos-table td {
     padding: 15px; /* Más espacio para los contenidos */
-    text-align: left;
+    text-align: center;
     border: 1px solid #ddd;
     word-wrap: break-word; /* Para que el texto largo se ajuste a la celda */
 }
@@ -214,6 +214,17 @@ footer {
     padding: 10px;
 }
 
+.formulario{
+    width: 70%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+select {
+    border-radius: 5px;
+    height: 30px;
+}
 .mensajeExito{
     background-color: green;
     width: 80%;

@@ -30,21 +30,11 @@
             </div>
         </div>
         <section class="form-container">
-            <h2>Cargar articulo</h2>
+            <h2>Cargar fábrica</h2>
 
             <form class="formulario" th:action="@{nuevo}" method="POST">
                 <label for="nombre">Nombre</label>
                 <input type="text" id="nombre" name="nombre" th:value="${nombre}" required>
-
-                <label for="descripcion">Descripción</label>
-                <input type="text" id="descripcion" name="descripcion" th:value="${descripcion}" required>
-
-                <label for="fabrica">Fabrica</label>
-                <select name="idFabrica">
-                    <option>Seleccionar Fabrica</option>
-                    <option th:each="fabrica : ${fabricas}" th:value="${fabrica.id}" th:text="${fabrica.nombreFabrica}"></option>
-                </select>
-
                 <button type="submit" class="btn">Crear</button>
             </form>
         </section>

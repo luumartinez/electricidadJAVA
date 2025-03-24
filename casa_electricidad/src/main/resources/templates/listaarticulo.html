@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Artículos</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 </head>
 
 <body class="lista-articulos">
@@ -21,54 +20,40 @@
     </header>
 
     <main class="main-lista-articulos">
+        <a href="/inicio" style="position: initial;" class="btn btn-primary">VOLVER</a>
         <section class="form-container">
             <h2>Gestión de Artículos</h2>
-
-            <!-- Mensajes de éxito o error -->
-            <div class="alert alert-success" id="exito" style="display: none;">¡Operación exitosa!</div>
-            <div class="alert alert-danger" id="error" style="display: none;">¡Hubo un error!</div>
-
-            <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
-                <div class="card-body">
-                    <h5 class="card-title">Error!</h5>
-                    <p class="card-text" th:text="${error}"></p>
-                </div>
-            </div>
-            <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito">
-                <div class="card-body">
-                    <h5 class="card-title">Exito!</h5>
-                    <p class="card-text" th:text="${exito}"></p>
-                </div>
-            </div>
-            <a th:href="@{/nuevo}" class="btn">Nuevo Artículo</a>
-
-            <!-- Tabla para mostrar los artículos -->
-            <table class="table table-hover lista-articulos-table">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Fábrica</th>
-                        <!-- <th>Acciones</th> -->
-                    </tr>
-                </thead>
-                <tbody th:each="articulo: ${articulos}">
-                    <tr>
-                        <th scope="row" th:text="${articulo.id}"></th>
-                        <td th:text="${articulo.nroArticulo}"></td>
-                        <td th:text="${articulo.nombreArticulo}"></td>
-                        <td th:text="${articulo.descripcionArticulo}"></td>
-                        <td th:text="${articulo.fabrica != null ? articulo.fabrica.nombre : 'Sin fábrica'}"></td>
-                        <!--
+            <a th:href="@{nuevo}" class="btn">Nuevo Artículo</a>
+        </section>
+        <section>
+        <!-- Tabla para mostrar los artículos -->
+        <table class="table lista-articulos-table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">nroArticulo</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Fábrica</th>
+                    <!-- <th>Acciones</th> -->
+                </tr>
+            </thead>
+            <tbody th:each="articulo: ${articulos}">
+                <tr>
+                    <th th:text="${articulo.id}"></th>
+                    <td th:text="${articulo.nroArticulo}"></td>
+                    <td th:text="${articulo.nombreArticulo}"></td>
+                    <td th:text="${articulo.descripcionArticulo}"></td>
+                    <td th:text="${articulo.fabrica != null ? articulo.fabrica.nombreFabrica : 'Sin fábrica'}"></td>
+                    <!--
 <td sec:authorize="hasAuthority('ROLE_ADMIN')">
     <a th:href="@{'/libro/modificar/' + ${libro.isbn}}"><i class="fas fa-feather-alt"></i> Modificar</a>
 </td>
 -->
 
-                    </tr>
-                </tbody>
-            </table>
+                </tr>
+            </tbody>
+        </table>
         </section>
     </main>
 
@@ -77,11 +62,5 @@
     </footer>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-    crossorigin="anonymous"></script>
 
 </html>

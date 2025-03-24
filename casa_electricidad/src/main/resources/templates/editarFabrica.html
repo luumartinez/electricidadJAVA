@@ -16,7 +16,7 @@
     </header>
 
     <main>
-        <a th:href="@{lista}" style="position: initial;" class="btn btn-primary">VOLVER</a>
+        <a th:href="@{../lista}" style="position: initial;" class="btn btn-primary">VOLVER</a>
         <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
             <div class="card-body">
                 <h5 class="card-title">Error!</h5>
@@ -30,22 +30,13 @@
             </div>
         </div>
         <section class="form-container">
-            <h2>Cargar articulo</h2>
+            <h2>Editar fábrica</h2>
 
-            <form class="formulario" th:action="@{nuevo}" method="POST">
+            <form class="formulario" th:action="@{${id}}" method="POST">
                 <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" name="nombre" th:value="${nombre}" required>
-
-                <label for="descripcion">Descripción</label>
-                <input type="text" id="descripcion" name="descripcion" th:value="${descripcion}" required>
-
-                <label for="fabrica">Fabrica</label>
-                <select name="idFabrica">
-                    <option>Seleccionar Fabrica</option>
-                    <option th:each="fabrica : ${fabricas}" th:value="${fabrica.id}" th:text="${fabrica.nombreFabrica}"></option>
-                </select>
-
-                <button type="submit" class="btn">Crear</button>
+                <input hidden name="id" th:value="${fabrica.id}" >
+                <input type="text" id="nombre" name="nombre" th:value="${fabrica.nombreFabrica}" required>
+                <button type="submit" class="btn">Editar</button>
             </form>
         </section>
     </main>

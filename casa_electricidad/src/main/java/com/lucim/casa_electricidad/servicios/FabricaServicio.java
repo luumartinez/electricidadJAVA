@@ -3,6 +3,7 @@ package com.lucim.casa_electricidad.servicios;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,8 @@ public class FabricaServicio {
     }
 
     @Transactional
-    public void modificarFabrica(String nombre) throws MiExcepcion {
-        Optional<Fabrica> respFabrica = fabricaRepositorio.findById(null);
+    public void modificarFabrica(String nombre, UUID id) throws MiExcepcion {
+        Optional<Fabrica> respFabrica = fabricaRepositorio.findById(id);
         if(respFabrica.isPresent()){
             validar(nombre);
             Fabrica fabrica = respFabrica.get();
@@ -43,6 +44,11 @@ public class FabricaServicio {
         List<Fabrica> fabricas = new ArrayList<>();
         fabricas = fabricaRepositorio.findAll();
         return fabricas;
+    }
+    
+    @Transactional(readOnly = true)
+    public Fabrica buscarPorID(UUID id) {
+       return fabricaRepositorio.getReferenceById(id);
     }
 
     public void validar(String nombre) throws MiExcepcion {

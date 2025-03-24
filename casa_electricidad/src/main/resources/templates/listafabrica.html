@@ -1,77 +1,74 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Fábricas</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Para los iconos -->
+    <title>Gestión de Artículos</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
-<body>
 
-<!-- Navbar -->
-<header>
-    <nav>
-        <h1>La Casa de Electricidad</h1>
-    </nav>
-</header>
+<body class="lista-articulos">
 
-<main>
-    <section class="form-container">
-        <h2>Gestión de Fábricas</h2>
+    <!-- Navbar -->
+    <header>
+        <nav>
+            <h1>La Casa de Electricidad</h1>
+        </nav>
+    </header>
 
-        <!-- Mensajes de éxito o error (puedes usarlo más adelante con backend si es necesario) -->
-        <div class="alert alert-success" id="exito" style="display: none;">¡Operación exitosa!</div>
-        <div class="alert alert-danger" id="error" style="display: none;">¡Hubo un error!</div>
+    <main class="main-lista-articulos">
+        <a href="/inicio" style="position: initial;" class="btn btn-primary">VOLVER</a>
+        <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+            <div class="card-body">
+                <h5 class="card-title">Error!</h5>
+                <p class="card-text" th:text="${error}"></p>
+            </div>
+        </div>
+        <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito">
+            <div class="card-body">
+                <h5 class="card-title">Exito!</h5>
+                <p class="card-text" th:text="${exito}"></p>
+            </div>
+        </div>
+        <section class="form-container">
+            <h2>Gestión de Fábricas</h2>
+            <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{nuevo}" class="btn">Nueva Fábrica</a>
+        </section>
+        <section>
+            <!-- Tabla para mostrar los artículos -->
+            <table class="table lista-articulos-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th sec:authorize="hasAuthority('ROLE_ADMIN')">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody th:each="fabrica: ${fabricas}">
+                    <tr>
+                        <th th:text="${fabrica.id}"></th>
+                        <td th:text="${fabrica.nombreFabrica}"></td>
 
-        <a href="#" class="btn">Nueva Fábrica</a>
+                        <!-- <td sec:authorize="hasAuthority('ROLE_ADMIN')"> -->
+                        <td sec:authorize="hasAuthority('ROLE_ADMIN')">
+                            <a th:href="@{'editar/' + ${fabrica.id}}"><i class="fas fa-feather-alt"></i>
+                                Modificar</a>
+                        </td>
 
-        <!-- Tabla para mostrar las fábricas -->
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Fila de ejemplo, simula que hay fábricas cargadas -->
-                <tr>
-                    <td>1</td>
-                    <td>Fábrica ABC</td>
-                    <td>
-                        <!-- Icono de modificar -->
-                        <a href="#" class="btn btn-edit">
-                            <i class="fas fa-edit"></i> Modificar
-                        </a>
-                        <!-- Formulario para eliminar -->
-                        <form action="#" method="POST" style="display: inline;">
-                            <button type="submit" class="btn btn-delete" onclick="return confirm('¿Estás seguro?')">
-                                <i class="fas fa-trash-alt"></i> Eliminar
-                            </button>
-                        </form>
-                    </td>
-                </tr>
 
-                <!-- Otra fila de ejemplo -->
-                <tr>
-                    <td>2</td>
-                    <td>Fábrica XYZ</td>
-                    <td>
-                        <!-- Icono de modificar -->
-                        <a href="#" class="btn btn-edit">
-                            <i class="fas fa-edit"></i> Modificar
-                        </a>
-                        <!-- Formulario para eliminar -->
-                        <form action="#" method="POST" style="display: inline;">
-                            <button type="submit" class="btn btn-delete" onclick="return confirm('¿Estás seguro?')">
-                                <i class="fas fa-trash-alt"></i> Eliminar
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-</main
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 La Casa de Electricidad. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+
+</html>
