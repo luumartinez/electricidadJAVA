@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +26,24 @@ public class ArticuloServicio {
     @Autowired
     FabricaRepositorio fabricaRepositorio;
 
+    private final AtomicInteger atomicInteger = new AtomicInteger(0);
+
     @Transactional
-    public void crearArticulo(String nombreArticulo, String descripcionArticulo, UUID idFabrica) throws MiExcepcion {
+    public synchronized void crearArticulo(String nombreArticulo, String descripcionArticulo, UUID idFabrica) throws MiExcepcion {
         Fabrica fabrica = fabricaRepositorio.findById(idFabrica).get();
         validar(nombreArticulo, descripcionArticulo, idFabrica);
+        int ultNroArticulo = articuloRepositorio.maxNumArticulo();
+        
+        // Aseguramos que el AtomicInteger comience en el valor correcto
+        if (atomicInteger.get() < ultNroArticulo) {
+            atomicInteger.set(ultNroArticulo);
+        }
+
+        // Generamos el nuevo número de artículo
+        int nuevoNroArticulo = atomicInteger.incrementAndGet();
         Articulo articulo = new Articulo();
-        articulo.setNroArticulo(Articulo.getAndIncrement());
         articulo.setNombreArticulo(nombreArticulo);
+        articulo.setNroArticulo(nuevoNroArticulo);
         articulo.setDescripcionArticulo(descripcionArticulo);
         articulo.setFabrica(fabrica);
         articuloRepositorio.save(articulo);

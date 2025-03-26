@@ -52,12 +52,14 @@ public class ArticuloControlador {
     }
 
     @PostMapping("/nuevo")
-    public void crearArticulo(@RequestParam String nombre, @RequestParam String descripcion, @RequestParam UUID idFabrica, ModelMap modelo) throws MiExcepcion{
+    public String crearArticulo(@RequestParam String nombre, @RequestParam String descripcion, @RequestParam UUID idFabrica, ModelMap modelo) throws MiExcepcion{
         try {
             articuloServicio.crearArticulo(nombre, descripcion, idFabrica);
             modelo.put("exito", "El artículo se cargó correctamente!");
+            return "redirect:/articulo/lista";
         } catch (MiExcepcion ex) {
             modelo.put("error", ex.getMessage());
+            return "crearArticulo.html";
         }
     }
 }

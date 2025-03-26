@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Entity
 public class Articulo {
 
-    private static final AtomicInteger atomicInteger = new AtomicInteger(0);
+    // private static final AtomicInteger atomicInteger = new AtomicInteger(0);
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,8 +38,12 @@ public class Articulo {
     @ManyToOne
     private Fabrica fabrica;
 
-    public static int getAndIncrement() {
-       return atomicInteger.getAndIncrement();
-    }
-}
+    // public static int generarAtomicInteger(int value) {
+    //     atomicInteger.set(value);
+    //     return atomicInteger.incrementAndGet();
+    // }
 
+    // public static void setInitialAtomicValue(int value) {
+    //     atomicInteger.set(value);
+    // }
+}
