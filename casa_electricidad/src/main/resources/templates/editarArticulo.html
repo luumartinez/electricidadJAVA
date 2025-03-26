@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear articulo</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <h1>La Casa de Electricidad</h1>
+        </nav>
+    </header>
+
+    <main>
+        <a th:href="@{../lista}" style="position: initial;" class="btn btn-primary">VOLVER</a>
+        <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+            <div class="card-body">
+                <h5 class="card-title">Error!</h5>
+                <p class="card-text" th:text="${error}"></p>
+            </div>
+        </div>
+        <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito">
+            <div class="card-body">
+                <h5 class="card-title">Exito!</h5>
+                <p class="card-text" th:text="${exito}"></p>
+            </div>
+        </div>
+        <section class="form-container">
+            <h2>Editar artículo</h2>
+            <form class="formulario" th:action="@{${id}}" method="POST">
+                <input hidden name="id" th:value="${articulo.id}">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" th:value="${articulo.nombreArticulo}" required>
+
+                <label for="descripcion">Descripción</label>
+                <input type="text" id="descripcion" name="descripcion" th:value="${articulo.descripcionArticulo}" required>
+
+                <label for="fabrica">Fabrica</label>
+                <select name="idFabrica">
+                     <option> Seleccionar Fabrica</option>
+                    <option th:each="fabrica : ${fabricas}" th:value="${fabrica.id}" th:text="${fabrica.nombreFabrica}"></option>
+                </select>
+
+                <button type="submit" class="btn">Editar</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 La Casa de Electricidad. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,6 +61,25 @@ public class ArticuloControlador {
         } catch (MiExcepcion ex) {
             modelo.put("error", ex.getMessage());
             return "crearArticulo.html";
+        }
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable UUID id, ModelMap modelo) throws MiExcepcion {
+        List<Fabrica> fabricas = fabricaServicio.listarFabricas();
+        modelo.addAttribute("fabricas", fabricas);
+        modelo.put("articulo", articuloServicio.buscarPorId(id));
+        return "editarArticulo.html";
+    }
+
+    @PostMapping("/editar/{id}")
+    public String editar(@PathVariable("id") UUID idArticulo, @RequestParam String nombre, @RequestParam String descripcion, @RequestParam UUID idFabrica, ModelMap modelo) throws MiExcepcion{
+        try {
+            articuloServicio.modificarArticulo(idArticulo, nombre, descripcion, idFabrica);
+            return "redirect:../lista";
+        } catch (MiExcepcion ex) {
+            modelo.put("error", ex.getMessage());
+            return"editarArticulo.html";
         }
     }
 }

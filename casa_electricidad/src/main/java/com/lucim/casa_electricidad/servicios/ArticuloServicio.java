@@ -70,6 +70,12 @@ public class ArticuloServicio {
         return articulos;
     }
 
+    @Transactional(readOnly = true)
+    public Articulo buscarPorId(UUID id) {
+        Articulo articulo = articuloRepositorio.getReferenceById(id);
+        return articulo;
+    }
+
     public void validar(String nombreArticulo, String descripcionArticulo, UUID idFabrica) throws MiExcepcion {
         if (nombreArticulo.isEmpty() || nombreArticulo == null) {
             throw new MiExcepcion("Ingrese un nombre para el artículo");

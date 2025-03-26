@@ -26,34 +26,36 @@
             <a th:href="@{nuevo}" class="btn">Nuevo Artículo</a>
         </section>
         <section>
-        <!-- Tabla para mostrar los artículos -->
-        <table class="table lista-articulos-table">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">nroArticulo</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Fábrica</th>
-                    <!-- <th>Acciones</th> -->
-                </tr>
-            </thead>
-            <tbody th:each="articulo: ${articulos}">
-                <tr>
-                    <th th:text="${articulo.id}"></th>
-                    <td th:text="${articulo.nroArticulo}"></td>
-                    <td th:text="${articulo.nombreArticulo}"></td>
-                    <td th:text="${articulo.descripcionArticulo}"></td>
-                    <td th:text="${articulo.fabrica != null ? articulo.fabrica.nombreFabrica : 'Sin fábrica'}"></td>
-                    <!--
-<td sec:authorize="hasAuthority('ROLE_ADMIN')">
-    <a th:href="@{'/libro/modificar/' + ${libro.isbn}}"><i class="fas fa-feather-alt"></i> Modificar</a>
-</td>
--->
+            <!-- Tabla para mostrar los artículos -->
+            <table class="table lista-articulos-table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">nroArticulo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Fábrica</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody th:each="articulo: ${articulos}">
+                    <tr>
+                        <th th:text="${articulo.id}"></th>
+                        <td th:text="${articulo.nroArticulo}"></td>
+                        <td th:text="${articulo.nombreArticulo}"></td>
+                        <td th:text="${articulo.descripcionArticulo}"></td>
+                        <td th:text="${articulo.fabrica != null ? articulo.fabrica.nombreFabrica : 'Sin fábrica'}"></td>
 
-                </tr>
-            </tbody>
-        </table>
+                        <!-- <td sec:authorize="hasAuthority('ROLE_ADMIN')"> -->
+                        <td>
+                            <a th:href="@{'editar/' + ${articulo.id}}"><i class="fas fa-feather-alt"></i>
+                                Modificar</a>
+                        </td>
+
+
+                    </tr>
+                </tbody>
+            </table>
         </section>
     </main>
 
