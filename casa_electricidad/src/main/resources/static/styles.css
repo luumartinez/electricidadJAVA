@@ -161,26 +161,6 @@ main {
     background-color: #dc3545; /* Botón rojo para eliminar */
 }
 
-/* Asegura que la tabla tenga un ancho adecuado para las columnas */
-.lista-articulos-table th:nth-child(1), .lista-articulos-table td:nth-child(1) {
-    width: 10%; /* Columna ID */
-}
-
-.lista-articulos-table th:nth-child(2), .lista-articulos-table td:nth-child(2) {
-    width: 25%; /* Columna Nombre */
-}
-
-.lista-articulos-table th:nth-child(3), .lista-articulos-table td:nth-child(3) {
-    width: 35%; /* Columna Descripción */
-}
-
-.lista-articulos-table th:nth-child(4), .lista-articulos-table td:nth-child(4) {
-    width: 20%; /* Columna Fábrica */
-}
-
-.lista-articulos-table th:nth-child(5), .lista-articulos-table td:nth-child(5) {
-    width: 10%; /* Columna Acciones */
-}
 
 /* Ajustes de estilo para el cuerpo */
 body {
@@ -240,3 +220,4 @@ select {
     text-align: center;
     border-radius:10px;
 }
+

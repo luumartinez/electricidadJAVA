@@ -3,6 +3,7 @@ package com.lucim.casa_electricidad.servicios;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -61,7 +62,7 @@ public class UsuarioServicio implements UserDetailsService {
     public void modificarUsuario(String email, String nombre, String apellido) throws MiExcepcion {
         try {
             Optional<Usuario> respUsuario = usuarioRepositorio.buscarPorEmail(email);
-            if(respUsuario.isPresent()) {
+            if (respUsuario.isPresent()) {
                 validar(email, nombre, apellido);
                 Usuario usuario = respUsuario.get();
                 usuario.setEmail(email);
@@ -72,6 +73,22 @@ public class UsuarioServicio implements UserDetailsService {
 
         } catch (MiExcepcion ex) {
             throw new MiExcepcion("No se pudo modificar el usuario" + ex.getMessage());
+        }
+    }
+
+    @Transactional
+    public void cambiarRol(UUID id) throws Exception{
+        try {
+            Usuario usuario = usuarioRepositorio.getReferenceById(id);
+            if (usuario != null) {
+                if (usuario.getRol().equals(Rol.ADMIN)) {
+                    usuario.setRol(Rol.USER);
+                } else if (usuario.getRol().equals(Rol.USER)) {
+                    usuario.setRol(Rol.ADMIN);
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("No se pudo edicar el rol" + e.getMessage());
         }
     }
 
