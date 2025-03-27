@@ -21,34 +21,40 @@
 
     <main class="main-lista-articulos">
         <a href="/inicio" style="position: initial;" class="btn btn-primary">VOLVER</a>
-        <section class="form-container">
-            <h2>Gestión de Artículos</h2>
-            <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{nuevo}" class="btn">Nuevo Artículo</a>
-        </section>
+        <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+            <div class="card-body">
+                <h5 class="card-title">Error!</h5>
+                <p class="card-text" th:text="${error}"></p>
+            </div>
+        </div>
+        <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito">
+            <div class="card-body">
+                <h5 class="card-title">Exito!</h5>
+                <p class="card-text" th:text="${exito}"></p>
+            </div>
+        </div>
         <section>
             <!-- Tabla para mostrar los artículos -->
             <table class="table lista-articulos-table">
                 <thead>
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">nroArticulo</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Fábrica</th>
-                        <th sec:authorize="hasAuthority('ROLE_ADMIN')">Acciones</th>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody th:each="articulo: ${articulos}">
+                <tbody th:each="usuario: ${usuarios}">
                     <tr>
-                        <th th:text="${articulo.id}"></th>
-                        <td th:text="${articulo.nroArticulo}"></td>
-                        <td th:text="${articulo.nombreArticulo}"></td>
-                        <td th:text="${articulo.descripcionArticulo}"></td>
-                        <td th:text="${articulo.fabrica != null ? articulo.fabrica.nombreFabrica : 'Sin fábrica'}"></td>
-
-                        <!-- <td sec:authorize="hasAuthority('ROLE_ADMIN')"> -->
-                        <td sec:authorize="hasAuthority('ROLE_ADMIN')">
-                            <a th:href="@{'editar/' + ${articulo.id}}"><i class="fas fa-feather-alt"></i>
+                        <th th:text="${usuario.id}"></th>
+                        <td th:text="${usuario.email}"></td>
+                        <td th:text="${usuario.nombre}"></td>
+                        <td th:text="${usuario.apellido}"></td>
+                        <td th:text="${usuario.rol}"></td>
+                        <td>
+                            <a th:href="@{'editar/'}"><i class="fas fa-feather-alt"></i>
                                 Modificar</a>
                         </td>
 

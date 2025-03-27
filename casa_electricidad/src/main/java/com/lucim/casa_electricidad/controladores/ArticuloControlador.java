@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class ArticuloControlador {
     @Autowired
     private FabricaServicio fabricaServicio;
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/lista")
     public String listaArticulos(ModelMap modelo) throws MiExcepcion {
         try {
@@ -40,6 +42,7 @@ public class ArticuloControlador {
         return "listaarticulo.html";
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/nuevo")
     public String crearArticulo(ModelMap modelo) throws MiExcepcion {
         try {
@@ -64,6 +67,7 @@ public class ArticuloControlador {
         }
     }
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable UUID id, ModelMap modelo) throws MiExcepcion {
         List<Fabrica> fabricas = fabricaServicio.listarFabricas();

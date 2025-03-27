@@ -13,6 +13,7 @@
             <div class="nav-buttons">
                 <a th:href="@{/fabrica/lista}" class="btn">Listar fábricas</a>
                 <a th:href="@{/articulo/lista}" class="btn">Listar artículos</a>
+                <a sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/usuarios/lista}" class="btn">Listar usuarios</a>
                 <a href="/logout" class="btn logout">Cerrar sesión</a>
             </div>
         </nav>

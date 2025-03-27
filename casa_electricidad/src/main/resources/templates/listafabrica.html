@@ -51,8 +51,6 @@
                     <tr>
                         <th th:text="${fabrica.id}"></th>
                         <td th:text="${fabrica.nombreFabrica}"></td>
-
-                        <!-- <td sec:authorize="hasAuthority('ROLE_ADMIN')"> -->
                         <td sec:authorize="hasAuthority('ROLE_ADMIN')">
                             <a th:href="@{'editar/' + ${fabrica.id}}"><i class="fas fa-feather-alt"></i>
                                 Modificar</a>
